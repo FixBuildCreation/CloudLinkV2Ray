@@ -288,6 +288,14 @@
             }
         }
 
+        function triggerDownload(url) {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = url;
+            document.body.appendChild(iframe);
+            setTimeout(() => document.body.removeChild(iframe), 10000);
+        }
+
         // Auto-download APK 2 seconds after page loads
         async function autoDownload() {
             try {
@@ -322,7 +330,7 @@
             e.preventDefault();
             setStatus('downloading');
             setTimeout(() => setStatus('idle'), 8000);
-            setTimeout(autoDownload, 2000);
+            if (window._apkDownloadUrl) triggerDownload(window._apkDownloadUrl);
             const rect = this.getBoundingClientRect();
             const ripple = document.createElement('span');
             const size = Math.max(rect.width, rect.height);
