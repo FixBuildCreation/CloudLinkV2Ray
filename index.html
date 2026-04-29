@@ -323,7 +323,12 @@
             setStatus('downloading');
             setTimeout(() => setStatus('idle'), 8000);
             if (window._apkDownloadUrl) {
-                window.location.href = window._apkDownloadUrl;
+                const a = document.createElement('a');
+                a.href = window._apkDownloadUrl;
+                a.download = a.href.split('/').pop();
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             }
             const rect = this.getBoundingClientRect();
             const ripple = document.createElement('span');
