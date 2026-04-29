@@ -1,630 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StarlinkVPN — Download</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/png" href="starlinkvpn.png" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudlink V2Ray - Download</title>
 
-    :root {
-      --bg:         #06101f;
-      --teal:       #2ec4b0;
-      --teal-light: #3dd8c0;
-      --yellow:     #f5e04a;
-      --blue:       #1b6fba;
-      --blue-light: #4aa5e0;
-      --text:       #ddeef8;
-      --muted:      #5e85a0;
-    }
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-    html { scroll-behavior: smooth; }
+    <style>
+        html {
+            height: 100%;
+        }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      overflow-x: hidden;
-    }
+        body {
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background-color: #03040b;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(112, 0, 255, 0.08) 0%, transparent 50%),
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+        }
 
-    /* ── Ambient background ── */
-    .bg-orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(140px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .bg-orb-teal  { width: 500px; height: 500px; background: radial-gradient(circle, rgba(46,196,176,0.16), transparent 70%); top: -160px; left: -160px; }
-    .bg-orb-blue  { width: 460px; height: 460px; background: radial-gradient(circle, rgba(26,111,186,0.20), transparent 70%); bottom: -140px; right: -140px; }
-    .bg-orb-mid   { width: 360px; height: 360px; background: radial-gradient(circle, rgba(245,224,74,0.05), transparent 70%); top: 38%; left: 48%; transform: translate(-50%,-50%); }
+        .font-tech { font-family: 'Rajdhani', sans-serif; }
 
-    /* ── Navbar ── */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: center;
-      padding: 0 20px;
-      background: rgba(6,16,31,0.82);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid rgba(61,216,192,0.13);
-      box-shadow: 0 1px 0 rgba(61,216,192,0.06), 0 4px 32px rgba(0,0,0,0.40);
-    }
+        .glowing-card {
+            background-color: rgba(18, 24, 40, 0.85);
+            background-image:
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 15px 15px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 243, 255, 0.35);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.15), inset 0 0 20px rgba(0, 243, 255, 0.05);
+            position: relative;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
-    body { padding-top: 74px; }
+        .glowing-card::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px; right: -1px; bottom: -1px;
+            border-radius: inherit;
+            background: linear-gradient(45deg, transparent 40%, rgba(0, 243, 255, 0.2) 50%, transparent 60%);
+            z-index: -1;
+            animation: borderGlow 4s linear infinite;
+            background-size: 200% 200%;
+        }
 
-    .nav-inner {
-      width: 100%;
-      max-width: 960px;
-      height: 74px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
 
-    .nav-logo {
-      width: 41px; height: 41px;
-      border-radius: 11px;
-      overflow: hidden;
-      flex-shrink: 0;
-      box-shadow: 0 0 0 1px rgba(61,216,192,0.22), 0 0 18px rgba(46,196,176,0.40);
-    }
-    .nav-logo img { width: 41px; height: 41px; object-fit: contain; display: block; }
+        @keyframes borderGlow {
+            0%   { background-position: 0% 50%; }
+            50%  { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-    .nav-brand {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .nav-title {
-      font-family: 'Space Grotesk', 'Inter', sans-serif;
-      font-size: 1.14rem;
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      background: linear-gradient(105deg, var(--teal-light), var(--yellow));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      line-height: 1;
-    }
-    .nav-tagline {
-      font-size: 0.71rem;
-      color: var(--muted);
-      font-weight: 400;
-      letter-spacing: 0.01em;
-      line-height: 1;
-    }
+        .text-glow { text-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
 
-    .nav-badge {
-      margin-left: auto;
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 14px;
-      border-radius: 99px;
-      background: rgba(46,196,176,0.10);
-      border: 1px solid rgba(46,196,176,0.25);
-      font-size: 0.74rem;
-      font-weight: 600;
-      color: var(--teal-light);
-      letter-spacing: 0.04em;
-    }
-    .nav-badge span.dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--teal-light);
-      box-shadow: 0 0 8px var(--teal-light);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 1; }
-      50%      { opacity: 0.35; }
-    }
+        @keyframes dataFlow {
+            0%   { left: -10px; opacity: 0; }
+            15%  { opacity: 1; }
+            85%  { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
 
-    /* ── Page section heading ── */
-    .section-heading {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 920px;
-      padding: 28px 20px 0;
-    }
-    .section-heading h2 {
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .section-heading h2 span {
-      display: inline-block;
-      width: 24px; height: 1px;
-      background: var(--muted);
-      vertical-align: middle;
-      margin-right: 10px;
-      opacity: 0.5;
-    }
+        @keyframes scan {
+            0%   { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
 
-    /* ── Main grid ── */
-    main {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 920px;
-      padding: 16px 20px 48px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 32px;
-    }
+        .btn-cyber {
+            position: relative;
+            background: rgba(0, 243, 255, 0.05);
+            border: 1px solid rgba(0, 243, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
 
-    /* ── Card ── */
-    .card {
-      border-radius: 18px;
-      padding: 20px 20px 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.30s cubic-bezier(.22,1,.36,1), box-shadow 0.30s;
-    }
+        .btn-cyber:hover {
+            background: rgba(0, 243, 255, 0.2);
+            border-color: rgba(0, 243, 255, 0.8);
+            box-shadow: 0 0 25px rgba(0, 243, 255, 0.4), inset 0 0 15px rgba(0, 243, 255, 0.2);
+            transform: translateY(-2px);
+        }
 
-    /* glossy top-shine */
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 52%;
-      border-radius: 22px 22px 60% 60% / 22px 22px 40% 40%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.01) 100%);
-      pointer-events: none;
-      z-index: 2;
-    }
+        .btn-cyber::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-20deg);
+            transition: 0.5s;
+        }
 
-    /* gradient border */
-    .card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 1.5px;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-      z-index: 3;
-    }
+        .btn-cyber:hover::after { left: 150%; }
 
-    .card > * { position: relative; z-index: 4; }
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            background-color: rgba(0, 243, 255, 0.5);
+            pointer-events: none;
+        }
 
-    .card-teal {
-      background: linear-gradient(145deg, #0e2535 0%, #091c2a 50%, #071520 100%);
-      box-shadow:
-        0 0 0 1px rgba(61,216,192,0.18),
-        0 4px 32px rgba(46,196,176,0.14),
-        inset 0 1px 0 rgba(61,216,192,0.18),
-        inset 0 -1px 0 rgba(0,0,0,0.30);
-    }
-    .card-teal::after {
-      background: linear-gradient(130deg, rgba(61,216,192,0.65) 0%, rgba(245,224,74,0.25) 50%, transparent 70%);
-    }
-    .card-teal:hover {
-      transform: translateY(-6px) scale(1.007);
-      box-shadow:
-        0 0 0 1px rgba(61,216,192,0.30),
-        0 28px 64px rgba(46,196,176,0.22),
-        inset 0 1px 0 rgba(61,216,192,0.22);
-    }
+        @keyframes ripple-animation {
+            to { transform: scale(4); opacity: 0; }
+        }
 
-    .card-blue {
-      background: linear-gradient(145deg, #0a1e35 0%, #071528 50%, #050d1e 100%);
-      box-shadow:
-        0 0 0 1px rgba(74,165,224,0.18),
-        0 4px 32px rgba(26,111,186,0.14),
-        inset 0 1px 0 rgba(74,165,224,0.18),
-        inset 0 -1px 0 rgba(0,0,0,0.30);
-    }
-    .card-blue::after {
-      background: linear-gradient(130deg, rgba(74,165,224,0.65) 0%, rgba(26,111,186,0.20) 50%, transparent 70%);
-    }
-    .card-blue:hover {
-      transform: translateY(-6px) scale(1.007);
-      box-shadow:
-        0 0 0 1px rgba(74,165,224,0.30),
-        0 28px 64px rgba(26,111,186,0.24),
-        inset 0 1px 0 rgba(74,165,224,0.22);
-    }
-
-    /* ── Card header ── */
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .app-icon-wrap {
-      flex-shrink: 0;
-      width: 52px; height: 52px;
-      border-radius: 14px;
-      overflow: hidden;
-      position: relative;
-    }
-    .app-icon-wrap img {
-      width: 52px; height: 52px;
-      object-fit: contain;
-      display: block;
-      border-radius: 14px;
-    }
-
-    .card-teal .app-icon-wrap {
-      box-shadow: 0 0 0 1.5px rgba(61,216,192,0.35), 0 0 28px rgba(46,196,176,0.50), inset 0 1px 0 rgba(255,255,255,0.12);
-    }
-    .card-blue .app-icon-wrap {
-      box-shadow: 0 0 0 1.5px rgba(74,165,224,0.35), 0 0 28px rgba(26,111,186,0.50), inset 0 1px 0 rgba(255,255,255,0.12);
-    }
-
-    .app-meta { flex: 1; min-width: 0; }
-    .app-name {
-      font-family: 'Space Grotesk', 'Inter', sans-serif;
-      font-size: 1.12rem;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.01em;
-    }
-    .app-subtitle {
-      font-size: 0.74rem;
-      color: var(--muted);
-      margin-top: 4px;
-      font-weight: 400;
-    }
-
-    /* ── Meta strip (replaces stats-row) ── */
-    .meta-strip {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .meta-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 5px 12px;
-      border-radius: 8px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-    .meta-item svg { width: 12px; height: 12px; opacity: 0.75; flex-shrink: 0; }
-    .meta-sep {
-      width: 3px; height: 3px;
-      border-radius: 50%;
-      background: var(--muted);
-      opacity: 0.4;
-      flex-shrink: 0;
-    }
-    .card-teal .meta-item {
-      background: linear-gradient(145deg, rgba(46,196,176,0.13), rgba(46,196,176,0.05));
-      border: 1px solid rgba(61,216,192,0.22);
-      color: var(--teal-light);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
-    }
-    .card-blue .meta-item {
-      background: linear-gradient(145deg, rgba(74,165,224,0.13), rgba(74,165,224,0.05));
-      border: 1px solid rgba(74,165,224,0.22);
-      color: var(--blue-light);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
-    }
-
-
-
-    /* ── Download button ── */
-    .btn-download {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      width: 100%;
-      padding: 12px 18px;
-      border-radius: 11px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      letter-spacing: 0.025em;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: filter 0.2s, transform 0.18s, box-shadow 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .btn-download::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, transparent 100%);
-      pointer-events: none;
-    }
-
-    .btn-teal {
-      background: linear-gradient(115deg, #25b09e 0%, var(--teal-light) 55%, #d4c930 130%);
-      color: #05161f;
-      box-shadow: 0 4px 24px rgba(46,196,176,0.38);
-    }
-    .btn-teal:hover { filter: brightness(1.09); transform: translateY(-1px); box-shadow: 0 10px 36px rgba(46,196,176,0.52); }
-
-    .btn-blue {
-      background: linear-gradient(115deg, #155fa0 0%, var(--blue-light) 100%);
-      color: #fff;
-      box-shadow: 0 4px 24px rgba(26,111,186,0.38);
-    }
-    .btn-blue:hover { filter: brightness(1.10); transform: translateY(-1px); box-shadow: 0 10px 36px rgba(26,111,186,0.52); }
-
-    .btn-download:active { transform: scale(0.96); filter: brightness(0.93); transition: transform 0.08s, filter 0.08s; }
-    .btn-download svg { width: 17px; height: 17px; flex-shrink: 0; }
-
-    /* shimmer sweep on hover */
-    .btn-download::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 55%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-      transform: translateX(-200%);
-      pointer-events: none;
-      z-index: 3;
-    }
-    .btn-download:hover::after {
-      transform: translateX(360%);
-      transition: transform 0.60s ease;
-    }
-
-    /* ripple on click */
-    .ripple {
-      position: absolute;
-      width: 0; height: 0;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.22);
-      transform: translate(-50%, -50%);
-      animation: rippleOut 0.65s ease-out forwards;
-      pointer-events: none;
-      z-index: 10;
-    }
-    @keyframes rippleOut { to { width: 340px; height: 340px; opacity: 0; } }
-
-    /* spinner + downloading state */
-    .btn-spinner {
-      display: none;
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,0.28);
-      border-top-color: currentColor;
-      border-radius: 50%;
-      animation: btnSpin 0.75s linear infinite;
-      flex-shrink: 0;
-    }
-    @keyframes btnSpin { to { transform: rotate(360deg); } }
-    .btn-download.is-downloading { pointer-events: none; opacity: 0.87; }
-    .btn-download.is-downloading .btn-icon { display: none; }
-    .btn-download.is-downloading .btn-spinner { display: block; }
-
-    /* hint text below button */
-    .btn-wrapper { display: flex; flex-direction: column; gap: 8px; }
-    .btn-hint {
-      text-align: center;
-      font-size: 0.70rem;
-      color: var(--muted);
-      letter-spacing: 0.025em;
-      font-weight: 400;
-      opacity: 0.60;
-      transition: color 0.35s, opacity 0.35s;
-    }
-    .card-teal .btn-hint.is-downloading { color: var(--teal-light); opacity: 0.88; }
-    .card-blue .btn-hint.is-downloading { color: var(--blue-light); opacity: 0.88; }
-
-    /* ── Footer ── */
-    footer {
-      position: relative;
-      z-index: 1;
-      padding: 0 24px 32px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-    .footer-copy {
-      font-size: 0.74rem;
-      color: var(--muted);
-      opacity: 0.65;
-    }
-    .footer-version {
-      font-size: 0.66rem;
-      color: var(--muted);
-      opacity: 0.38;
-      letter-spacing: 0.04em;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 520px) {
-      body { padding-top: 74px; }
-      nav { padding: 0 14px; }
-      main { padding: 16px 14px 48px; gap: 28px; grid-template-columns: 1fr; }
-      .card { padding: 18px 16px 16px; gap: 13px; }
-      .section-heading { padding: 20px 14px 0; }
-      .nav-tagline { font-size: 0.62rem; }
-    }
-  </style>
+        /* On mobile: shift card above center using negative margin */
+        @media (max-width: 640px) {
+            .glowing-card {
+                margin-bottom: 25vh;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="bg-orb bg-orb-teal"></div>
-  <div class="bg-orb bg-orb-blue"></div>
-  <div class="bg-orb bg-orb-mid"></div>
+    <div class="glowing-card rounded-2xl p-5 max-w-sm w-full text-center z-10">
 
-  <!-- ── Navbar ── -->
-  <nav>
-    <div class="nav-inner">
-      <div class="nav-logo"><img src="starlinkvpn.png" alt="StarlinkVPN" /></div>
-      <div class="nav-brand">
-        <span class="nav-title">STARLINK</span>
-        <span class="nav-tagline">Fast, secure &amp; private</span>
-      </div>
-      <div class="nav-badge">
-        <span class="dot"></span>
-        Stable
-      </div>
-    </div>
-  </nav>
-
-  <!-- ── Section label ── -->
-  <div class="section-heading">
-    <h2><span></span>Download our application</h2>
-  </div>
-
-  <!-- ── Cards ── -->
-  <main>
-
-    <!-- Card 1: StarlinkVPN -->
-    <div class="card card-teal">
-      <div class="card-header">
-        <div class="app-icon-wrap">
-          <img src="starlinkvpn.png" alt="StarlinkVPN" />
+        <!-- Logo -->
+        <div class="mb-2 flex justify-center relative">
+            <div class="absolute inset-0 bg-blue-500 rounded-full blur-[35px] opacity-30"></div>
+            <img src="app_main_logo_git.png" alt="Cloudlink V2Ray Logo"
+                 class="w-20 h-20 rounded-2xl relative z-10 drop-shadow-[0_0_15px_rgba(0,150,255,0.4)] transition-transform hover:scale-105 duration-300"
+                 onerror="this.src='https://via.placeholder.com/80/1e293b/38bdf8?text=CL'">
         </div>
-        <div class="app-meta">
-          <div class="app-name">StarLink VPN</div>
-          <div class="app-subtitle">Standard Edition &nbsp;·&nbsp; Android APK</div>
-        </div>
-      </div>
 
-      <div class="meta-strip">
-        <div class="meta-item">
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1v7M3 5l3 3 3-3"/><path d="M1 10h10"/></svg>
-          62.6 MB
-        </div>
-        <div class="meta-sep"></div>
-        <div class="meta-item">
-          <svg viewBox="0 0 12 12" fill="currentColor"><path d="M2.5 4.5C2.5 2.57 4.07 1 6 1s3.5 1.57 3.5 3.5v.5h.5a1 1 0 0 1 0 2H1.5a1 1 0 0 1 0-2h.5v-.5ZM4 8h4v1.5A1.5 1.5 0 0 1 6.5 11h-1A1.5 1.5 0 0 1 4 9.5V8Z"/></svg>
-          Android
-        </div>
-        <div class="meta-sep"></div>
-        <div class="meta-item meta-item-stable">
-          <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg>
-          Stable Release
-        </div>
-      </div>
+        <h1 class="font-tech text-3xl font-bold mb-0 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-500 text-glow uppercase tracking-wider">
+            Cloudlink V2Ray
+        </h1>
+        <p class="text-cyan-500/60 text-xs font-semibold tracking-[0.2em] mb-3 uppercase">
+            Secure Encrypted Tunnel
+        </p>
 
-      <div class="btn-wrapper">
-        <a class="btn-download btn-teal"
-          href="https://github.com/FixBuildCreation/StarlinkVpn/releases/download/stable/app.fixbuild.StarlinkVPN-release.apk"
-          onclick="createRipple(event,this);startDownload(this,'https://github.com/FixBuildCreation/StarlinkVpn/releases/download/stable/app.fixbuild.StarlinkVPN-release.apk');return false;">
-          <svg class="btn-icon" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8.5 2v9M5 7.5l3.5 3.5 3.5-3.5"/><path d="M2 14h13"/>
-          </svg>
-          <span class="btn-label">Download APK</span>
-          <span class="btn-spinner"></span>
+        <!-- Animated Data Routing Nodes -->
+        <div class="mb-4 relative flex items-center justify-between px-3 py-3 bg-black/60 rounded-xl border border-cyan-500/20 shadow-inner overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent w-full h-[200%] animate-[scan_3s_linear_infinite]"></div>
+
+            <div class="relative z-10 flex flex-col items-center gap-1 w-10">
+                <i class="fa-solid fa-mobile-screen text-gray-400 text-sm"></i>
+                <span class="text-[7px] text-gray-500 uppercase tracking-widest font-bold">Client</span>
+            </div>
+
+            <div class="relative z-10 flex-1 h-[2px] bg-gray-800 mx-1 flex items-center overflow-hidden rounded-full">
+                <div class="absolute h-full w-4 bg-cyan-400 rounded-full shadow-[0_0_8px_#00f3ff] animate-[dataFlow_1.5s_linear_infinite]"></div>
+            </div>
+
+            <div class="relative z-10 flex flex-col items-center gap-1">
+                <div class="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/50 flex items-center justify-center shadow-[0_0_15px_rgba(0,243,255,0.3)]">
+                    <i class="fa-solid fa-shield-halved text-cyan-400 text-xs"></i>
+                </div>
+                <span class="text-[7px] text-cyan-400 uppercase tracking-widest font-bold text-glow">V2Ray Core</span>
+            </div>
+
+            <div class="relative z-10 flex-1 h-[2px] bg-gray-800 mx-1 flex items-center overflow-hidden rounded-full">
+                <div class="absolute h-full w-4 bg-blue-500 rounded-full shadow-[0_0_8px_#3b82f6] animate-[dataFlow_1.5s_linear_infinite_0.75s]"></div>
+            </div>
+
+            <div class="relative z-10 flex flex-col items-center gap-1 w-10">
+                <i class="fa-solid fa-globe text-gray-400 text-sm"></i>
+                <span class="text-[7px] text-gray-500 uppercase tracking-widest font-bold">Web</span>
+            </div>
+        </div>
+
+        <!-- Info Cards Row: File Size + Downloads + Release Date -->
+        <div class="grid grid-cols-3 gap-2 mb-4">
+
+            <!-- File Size -->
+            <div class="bg-black/50 border border-white/10 rounded-xl p-2 flex flex-col items-center justify-center shadow-inner">
+                <div class="w-7 h-7 rounded-lg bg-blue-500/20 flex items-center justify-center border border-blue-500/30 mb-1">
+                    <i class="fa-solid fa-file-zipper text-blue-400 text-xs"></i>
+                </div>
+                <span class="text-[8px] text-gray-400 uppercase tracking-widest font-semibold">Size</span>
+                <span id="apk-size" class="font-tech text-sm font-bold text-white text-glow">...</span>
+            </div>
+
+            <!-- Downloads -->
+            <div class="bg-black/50 border border-white/10 rounded-xl p-2 flex flex-col items-center justify-center shadow-inner">
+                <div class="w-7 h-7 rounded-lg bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30 mb-1">
+                    <i class="fa-solid fa-download text-cyan-400 text-xs"></i>
+                </div>
+                <span class="text-[8px] text-gray-400 uppercase tracking-widest font-semibold">Downloads</span>
+                <span id="download-count" class="font-tech text-sm font-bold text-white text-glow">...</span>
+            </div>
+
+            <!-- Release Date -->
+            <div class="bg-black/50 border border-white/10 rounded-xl p-2 flex flex-col items-center justify-center shadow-inner">
+                <div class="w-7 h-7 rounded-lg bg-purple-500/20 flex items-center justify-center border border-purple-500/30 mb-1">
+                    <i class="fa-solid fa-calendar text-purple-400 text-xs"></i>
+                </div>
+                <span class="text-[8px] text-gray-400 uppercase tracking-widest font-semibold">Released</span>
+                <span id="release-date" class="font-tech text-sm font-bold text-white text-glow">...</span>
+            </div>
+
+        </div>
+
+        <!-- Download Button -->
+        <a href="#" id="downloadBtn"
+           class="btn-cyber flex items-center justify-center gap-3 w-full text-cyan-300 font-tech font-bold text-lg py-3 px-6 rounded-xl uppercase tracking-widest">
+            <i class="fa-brands fa-android text-xl relative z-10 pointer-events-none"></i>
+            <span class="relative z-10 pointer-events-none">Download APK</span>
         </a>
-        <p class="btn-hint">Free &middot; Direct APK</p>
-      </div>
+
+        <!-- Download Status -->
+        <div class="my-2 flex items-center justify-center gap-2">
+            <span id="status-dot" class="w-1.5 h-1.5 rounded-full bg-gray-600 transition-all duration-500"></span>
+            <p id="download-status" class="text-[10px] text-gray-500 tracking-widest uppercase font-semibold transition-all duration-500">
+                Tap the button above to download
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-3 pt-3 border-t border-cyan-500/20">
+            <p class="text-[10px] text-gray-500 tracking-widest uppercase flex items-center justify-center gap-2">
+                <i class="fa-solid fa-microchip text-cyan-500/50"></i>
+                Build by FixBuild Core X
+            </p>
+        </div>
+
     </div>
 
-    <!-- Card 2: StarlinkV2RayN -->
-    <div class="card card-blue">
-      <div class="card-header">
-        <div class="app-icon-wrap">
-          <img src="starlinkv2rayn.png" alt="StarlinkV2RayN" />
-        </div>
-        <div class="app-meta">
-          <div class="app-name">StarLink V2RayN</div>
-          <div class="app-subtitle">V2Ray Edition &nbsp;·&nbsp; Android APK</div>
-        </div>
-      </div>
+    <p class="fixed bottom-3 left-0 right-0 text-center text-[9px] text-gray-700 tracking-widest uppercase">Page v1.0</p>
 
-      <div class="meta-strip">
-        <div class="meta-item">
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1v7M3 5l3 3 3-3"/><path d="M1 10h10"/></svg>
-          74.7 MB
-        </div>
-        <div class="meta-sep"></div>
-        <div class="meta-item">
-          <svg viewBox="0 0 12 12" fill="currentColor"><path d="M2.5 4.5C2.5 2.57 4.07 1 6 1s3.5 1.57 3.5 3.5v.5h.5a1 1 0 0 1 0 2H1.5a1 1 0 0 1 0-2h.5v-.5ZM4 8h4v1.5A1.5 1.5 0 0 1 6.5 11h-1A1.5 1.5 0 0 1 4 9.5V8Z"/></svg>
-          Android
-        </div>
-        <div class="meta-sep"></div>
-        <div class="meta-item meta-item-stable">
-          <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg>
-          Stable Release
-        </div>
-      </div>
+    <script>
+        const GITHUB_API = 'https://api.github.com/repos/FixBuildCreation/CloudLinkV2Ray/releases/latest';
 
-      <div class="btn-wrapper">
-        <a class="btn-download btn-blue"
-          href="https://github.com/FixBuildCreation/StarlinkVpn/releases/download/stable/app.fixbuild.vpncore.StarlinkV2RayN-release.apk"
-          onclick="createRipple(event,this);startDownload(this,'https://github.com/FixBuildCreation/StarlinkVpn/releases/download/stable/app.fixbuild.vpncore.StarlinkV2RayN-release.apk');return false;">
-          <svg class="btn-icon" viewBox="0 0 17 17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8.5 2v9M5 7.5l3.5 3.5 3.5-3.5"/><path d="M2 14h13"/>
-          </svg>
-          <span class="btn-label">Download APK</span>
-          <span class="btn-spinner"></span>
-        </a>
-        <p class="btn-hint">Free &middot; Direct APK</p>
-      </div>
-    </div>
+        async function fetchReleaseInfo() {
+            try {
+                const response = await fetch(GITHUB_API);
+                const data = await response.json();
 
-  </main>
+                const apkAsset = data.assets && data.assets.find(a => a.name.endsWith('.apk'));
 
-  <footer>
-    <p class="footer-copy">&copy; 2026 FixBuild. All rights reserved.</p>
-    <p class="footer-version">StarlinkVPN &nbsp;&middot;&nbsp; Version 1.3</p>
-  </footer>
+                if (apkAsset) {
+                    // File Size
+                    const mb = (apkAsset.size / (1024 * 1024)).toFixed(2);
+                    document.getElementById('apk-size').innerText = mb + ' MB';
 
+                    // Downloads
+                    document.getElementById('download-count').innerText =
+                        apkAsset.download_count.toLocaleString();
 
-<script>
-    function triggerDownload(url) {
-      var iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = url;
-      document.body.appendChild(iframe);
-      setTimeout(function () { document.body.removeChild(iframe); }, 10000);
-    }
+                    // Download URL — store in variable, not href
+                    window._apkDownloadUrl = apkAsset.browser_download_url;
+                }
 
-    function startDownload(btn, url) {
-      triggerDownload(url);
+                // Release Date
+                const date = new Date(data.published_at);
+                const formatted = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                document.getElementById('release-date').innerText = formatted;
 
-      var hint = btn.closest('.btn-wrapper').querySelector('.btn-hint');
-      btn.classList.add('is-downloading');
-      btn.querySelector('.btn-label').textContent = 'Downloading\u2026';
-      hint.textContent = 'Download started \u2014 check your notifications';
-      hint.classList.add('is-downloading');
+            } catch (error) {
+                console.error('Error fetching release info:', error);
+                document.getElementById('apk-size').innerText = '87.56 MB';
+                document.getElementById('download-count').innerText = '—';
+                document.getElementById('release-date').innerText = 'Apr 29, 2026';
+            }
+        }
 
-      setTimeout(function () {
-        btn.classList.remove('is-downloading');
-        btn.querySelector('.btn-label').textContent = 'Download APK';
-        hint.textContent = 'Free \u00b7 Direct APK';
-        hint.classList.remove('is-downloading');
-      }, 5000);
-    }
+        const statusDot = document.getElementById('status-dot');
+        const statusText = document.getElementById('download-status');
 
-    function createRipple(e, btn) {
-      var rect = btn.getBoundingClientRect();
-      var r = document.createElement('span');
-      r.className = 'ripple';
-      r.style.left = (e.clientX - rect.left) + 'px';
-      r.style.top = (e.clientY - rect.top) + 'px';
-      btn.appendChild(r);
-      setTimeout(function () { r.remove(); }, 700);
-    }
-  </script>
+        function setStatus(state) {
+            if (state === 'downloading') {
+                statusDot.className = 'w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_6px_#00f3ff] transition-all duration-500';
+                statusText.className = 'text-[10px] text-cyan-400 tracking-widest uppercase font-semibold transition-all duration-500 text-glow';
+                statusText.innerText = 'Download in progress...';
+            } else {
+                statusDot.className = 'w-1.5 h-1.5 rounded-full bg-gray-600 transition-all duration-500';
+                statusText.className = 'text-[10px] text-gray-500 tracking-widest uppercase font-semibold transition-all duration-500';
+                statusText.innerText = 'Tap the button above to download';
+            }
+        }
+
+        function triggerDownload(url) {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = url;
+            document.body.appendChild(iframe);
+            setTimeout(() => document.body.removeChild(iframe), 10000);
+        }
+
+        // Auto-download APK 2 seconds after page loads
+        async function autoDownload() {
+            try {
+                const response = await fetch(GITHUB_API);
+                const data = await response.json();
+                const apkAsset = data.assets && data.assets.find(a => a.name.endsWith('.apk'));
+                if (apkAsset) {
+                    setStatus('downloading');
+                    const a = document.createElement('a');
+                    a.href = apkAsset.browser_download_url;
+                    a.download = apkAsset.name;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    setTimeout(() => setStatus('idle'), 8000);
+                }
+            } catch (e) {
+                console.error('Auto-download failed:', e);
+                setStatus('idle');
+            }
+        }
+
+        fetchReleaseInfo();
+        setInterval(fetchReleaseInfo, 30000);
+
+        // Auto-download on every page load
+        setTimeout(autoDownload, 2000);
+
+        // Ripple effect + status on manual click
+        const btn = document.getElementById('downloadBtn');
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            setStatus('downloading');
+            setTimeout(() => setStatus('idle'), 8000);
+            if (window._apkDownloadUrl) triggerDownload(window._apkDownloadUrl);
+            const rect = this.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            const size = Math.max(rect.width, rect.height);
+            ripple.classList.add('ripple');
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+            ripple.style.top  = (e.clientY - rect.top  - size / 2) + 'px';
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        });
+    </script>
+
 </body>
 </html>
