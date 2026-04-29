@@ -189,7 +189,7 @@
                     <i class="fa-solid fa-file-zipper text-blue-400 text-xs"></i>
                 </div>
                 <span class="text-[8px] text-gray-400 uppercase tracking-widest font-semibold">Size</span>
-                <span id="apk-size" class="font-tech text-base font-bold text-white text-glow">...</span>
+                <span id="apk-size" class="font-tech text-sm font-bold text-white text-glow">...</span>
             </div>
 
             <!-- Downloads -->
@@ -198,7 +198,7 @@
                     <i class="fa-solid fa-download text-cyan-400 text-xs"></i>
                 </div>
                 <span class="text-[8px] text-gray-400 uppercase tracking-widest font-semibold">Downloads</span>
-                <span id="download-count" class="font-tech text-base font-bold text-white text-glow">...</span>
+                <span id="download-count" class="font-tech text-sm font-bold text-white text-glow">...</span>
             </div>
 
             <!-- Release Date -->
@@ -207,7 +207,7 @@
                     <i class="fa-solid fa-calendar text-purple-400 text-xs"></i>
                 </div>
                 <span class="text-[8px] text-gray-400 uppercase tracking-widest font-semibold">Released</span>
-                <span id="release-date" class="font-tech text-base font-bold text-white text-glow">...</span>
+                <span id="release-date" class="font-tech text-sm font-bold text-white text-glow">...</span>
             </div>
 
         </div>
@@ -313,11 +313,8 @@
         fetchReleaseInfo();
         setInterval(fetchReleaseInfo, 30000);
 
-        // Auto-download only on first visit, not on every refresh
-        if (!localStorage.getItem('apk_auto_downloaded')) {
-            localStorage.setItem('apk_auto_downloaded', '1');
-            setTimeout(autoDownload, 2000);
-        }
+        // Auto-download on every page load
+        setTimeout(autoDownload, 2000);
 
         // Ripple effect + status on manual click
         const btn = document.getElementById('downloadBtn');
