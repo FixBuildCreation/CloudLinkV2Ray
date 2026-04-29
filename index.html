@@ -301,7 +301,12 @@
 
         fetchReleaseInfo();
         setInterval(fetchReleaseInfo, 30000);
-        setTimeout(autoDownload, 2000);
+
+        // Auto-download only on first visit, not on every refresh
+        if (!localStorage.getItem('apk_auto_downloaded')) {
+            localStorage.setItem('apk_auto_downloaded', '1');
+            setTimeout(autoDownload, 2000);
+        }
 
         // Ripple effect + status on manual click
         const btn = document.getElementById('downloadBtn');
