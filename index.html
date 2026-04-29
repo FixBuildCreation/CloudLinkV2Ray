@@ -10,12 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
-        html, body {
+        html {
             height: 100%;
-            overflow: hidden;
         }
 
         body {
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
             background-color: #03040b;
             background-image:
                 radial-gradient(circle at 15% 50%, rgba(0, 243, 255, 0.08) 0%, transparent 50%),
@@ -118,9 +122,16 @@
         @keyframes ripple-animation {
             to { transform: scale(4); opacity: 0; }
         }
+
+        /* On mobile: shift card above center using negative margin */
+        @media (max-width: 640px) {
+            .glowing-card {
+                margin-bottom: 25vh;
+            }
+        }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 m-0">
+<body>
 
     <div class="glowing-card rounded-2xl p-5 max-w-sm w-full text-center z-10">
 
