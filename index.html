@@ -256,8 +256,8 @@
                     document.getElementById('download-count').innerText =
                         apkAsset.download_count.toLocaleString();
 
-                    // Download URL
-                    document.getElementById('downloadBtn').href = apkAsset.browser_download_url;
+                    // Download URL — store in variable, not href
+                    window._apkDownloadUrl = apkAsset.browser_download_url;
                 }
 
                 // Release Date
@@ -280,7 +280,7 @@
             if (state === 'downloading') {
                 statusDot.className = 'w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_6px_#00f3ff] transition-all duration-500';
                 statusText.className = 'text-[10px] text-cyan-400 tracking-widest uppercase font-semibold transition-all duration-500 text-glow';
-                statusText.innerText = '⬇ Download in progress...';
+                statusText.innerText = 'Download in progress...';
             } else {
                 statusDot.className = 'w-1.5 h-1.5 rounded-full bg-gray-600 transition-all duration-500';
                 statusText.className = 'text-[10px] text-gray-500 tracking-widest uppercase font-semibold transition-all duration-500';
@@ -322,8 +322,12 @@
         // Ripple effect + status on manual click
         const btn = document.getElementById('downloadBtn');
         btn.addEventListener('click', function(e) {
+            e.preventDefault();
             setStatus('downloading');
             setTimeout(() => setStatus('idle'), 8000);
+            if (window._apkDownloadUrl) {
+                window.location.href = window._apkDownloadUrl;
+            }
             const rect = this.getBoundingClientRect();
             const ripple = document.createElement('span');
             const size = Math.max(rect.width, rect.height);
