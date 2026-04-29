@@ -325,7 +325,7 @@
             if (window._apkDownloadUrl) {
                 const a = document.createElement('a');
                 a.href = window._apkDownloadUrl;
-                a.download = a.href.split('/').pop();
+                a.download = window._apkDownloadUrl.split('/').pop();
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
