@@ -306,12 +306,7 @@
                 const apkAsset = data.assets && data.assets.find(a => a.name.endsWith('.apk'));
                 if (apkAsset) {
                     setStatus('downloading');
-                    const a = document.createElement('a');
-                    a.href = apkAsset.browser_download_url;
-                    a.download = apkAsset.name;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
+                    triggerDownload(apkAsset.browser_download_url);
                     setTimeout(() => setStatus('idle'), 8000);
                 }
             } catch (e) {
